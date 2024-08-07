@@ -62,8 +62,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        // CORS configuration
         httpSecurity
-                .cors().and()
+                .cors(cors -> cors
+                        .configurationSource(request -> {
+                            org.springframework.web.cors.CorsConfiguration corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                            corsConfig.addAllowedOrigin("https://e-wallet-client.onrender.com");
+                            corsConfig.addAllowedMethod("*");
+                            corsConfig.addAllowedHeader("*");
+                            corsConfig.setAllowCredentials(true);
+                            return corsConfig;
+                        }))
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
