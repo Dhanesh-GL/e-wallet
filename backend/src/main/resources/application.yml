@@ -30,7 +30,10 @@ spring:
       generate-ddl: true
   flyway:
     enabled: true
-    placeholderReplacement: false
+    url: ${DB_URL}
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    placeholder-replacement: false
     baseline-on-migrate: true
   mvc:
     throw-exception-if-no-handler-found: true
